@@ -1,3 +1,5 @@
+# initial simulation to test theory on simple example case
+
 import numpy as np
 import math
 import time
@@ -77,6 +79,21 @@ if __name__ == '__main__':
     # run simulation
     for t in tqdm(range(T)): 
         if t >= burn_in:
+
+            # update frequency time series 
+            Gamma_reindexed = np.zeros((N), dtype=int)
+            for i in range(N):
+                temp = Gamma_ind[i]
+                if Gamma_pheno[i] == 1:
+                    temp += V
+                Gamma_reindexed[i] = temp
+
+            unique, counts = np.unique(Gamma_reindexed, return_counts=True)
+
+            freq_temp = counts / N
+            for k in range(len(unique)):
+                freq_timeseries[unique[k],t-burn_in] = freq_temp[k]
+
             # choose inidividuals from population to reproduce at this timestep
             chosen_to_reproduce = np.where(np.random.binomial(1, np.squeeze(r[Gamma_pheno]), size = N))[0]
             # print('Parent genotypes: ', Gamma_ind)
@@ -116,20 +133,6 @@ if __name__ == '__main__':
             # update Gamma_ind and Gamma_pheno
             Gamma_ind = np.array([pop_genotypes[j] for j in select_ids]).astype(int)
             Gamma_pheno = np.array([pop_phenotypes[j] for j in select_ids]).astype(int)
-
-            # update frequency time series 
-            Gamma_reindexed = np.zeros((N), dtype=int)
-            for i in range(N):
-                temp = Gamma_ind[i]
-                if Gamma_pheno[i] == 1:
-                    temp += V
-                Gamma_reindexed[i] = temp
-
-            unique, counts = np.unique(Gamma_reindexed, return_counts=True)
-
-            freq_temp = counts / N
-            for k in range(len(unique)):
-                freq_timeseries[unique[k],t-burn_in] = freq_temp[k]
 
         else:
 

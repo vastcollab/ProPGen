@@ -1,0 +1,8 @@
+graph_setup: random # file
+seed: 42
+
+# parameters for random graph generation 
+V: 5 # number of genotypes/nodes
+
+
+# parameters for file-specified graph setup 
