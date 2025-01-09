@@ -36,6 +36,8 @@ if __name__ == '__main__':
 
     seed = cfg['seed']
 
+    np.random.seed(seed) # setting seed for all random numbers
+
     # random graph setup 
     if cfg['graph_setup'] == 'random':
         V = cfg['V'] # number of genotypes
@@ -56,6 +58,9 @@ if __name__ == '__main__':
     trial = cfg['Trial number'] 
     outdir = cfg['outdir']
 
+    print('Adjacency matrix', A)
+    print(A.shape)
+
     # random phenotype probability assignment 
     if cfg['phenotype_probs_setup'] == 'random':
         Q = cfg['Q'] # number of phenotypes
@@ -69,14 +74,22 @@ if __name__ == '__main__':
     elif cfg['phenotype_probs_setup'] == 'file':
         probs_file = cfg['pheno_probs']
         pi = pd.read_csv(probs_file, delimiter=',', header=None).to_numpy() # g -> p probabilities
+        Q = pi.shape[0]
+
+    print(Q)
+    print('Pi', pi)
+    print(pi.shape)
 
     # random reproduction probability assignment 
     if cfg['repro_probs_setup'] == 'random':
-        pass
+        r = np.random.rand(Q) # random probability for each phenotype
 
     elif cfg['repro_probs_setup'] == 'file':
         repro_file = cfg['repro_probs'] 
         r = pd.read_csv(repro_file, delimiter=',', header=None).to_numpy() # probability of each phenotype reproducing at single timestep
+
+    print('r', r)
+    print(r.shape)
 
     ## PrFL dynamics simulation
     starttime = time.time()
@@ -89,11 +102,14 @@ if __name__ == '__main__':
     # phenotype = 0 is high fitness, phenotype = 1 is low fitness
 
     # Gamma refers to the set of individuals in the population
-    Gamma_ind = np.random.randint(0, 2, size=(N))
-    Gamma_pheno = np.random.randint(0, 2, size=(N))
+    Gamma_ind = np.random.randint(0, V, size=(N)) # assign every individual to a genotype
+    Gamma_pheno = np.random.randint(0, Q, size=(N)) # assign every individual to a phenotype
+
+    print('Gamma_ind', Gamma_ind)
+    print('Gamma_pheno', Gamma_pheno)
 
     # keep track of frequency time series
-    freq_timeseries = np.zeros((2*V,T-burn_in)) # (g*p, T)
+    freq_timeseries = np.zeros((Q*V, T-burn_in)) # (g*p, T)
 
     # run simulation
     for t in tqdm(range(T)): 
@@ -113,18 +129,15 @@ if __name__ == '__main__':
             for k in range(len(unique)):
                 freq_timeseries[unique[k],t-burn_in] = freq_temp[k]
 
+
             # choose inidividuals from population to reproduce at this timestep
             chosen_to_reproduce = np.where(np.random.binomial(1, np.squeeze(r[Gamma_pheno]), size = N))[0]
-            # print('Parent genotypes: ', Gamma_ind)
-            # print('Chosen to reproduce: ', chosen_to_reproduce)
 
             # genotypes of offspring for chosen individuals
             offspring_genotypes = np.repeat(Gamma_ind[chosen_to_reproduce], c)
-            # print('Offspring genotypes', offspring_genotypes)
 
             # offspring mutate according to neighbors
             chosen_to_mutate = np.where(np.random.binomial(1, mu, size = len(offspring_genotypes)))[0]
-            # print('Chosen to mutate', chosen_to_mutate)
 
             for i in chosen_to_mutate:
                 curr_genotype = offspring_genotypes[i]
@@ -138,9 +151,7 @@ if __name__ == '__main__':
 
             # offspring genotypes are mapped to phenotypes according to pi 
             pheno_probs = np.squeeze(pi[offspring_genotypes])
-            # print('phenotype probs', pheno_probs)
             offspring_phenotypes = 1 - np.random.binomial(np.ones((len(offspring_genotypes)), dtype=int), p=pheno_probs)
-            # print('offspring_phenotypes', offspring_phenotypes)
 
             # add offspring to entire population
             pop_genotypes = np.concatenate([Gamma_ind, offspring_genotypes])
