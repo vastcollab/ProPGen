@@ -1,3 +1,5 @@
+# TODO: Make sure both file-input and random support matrices 
+
 import numpy as np
 import math
 import time
@@ -21,6 +23,10 @@ def generate_erdos_renyi_graph(n, p, seed=None):
     # get the adjacency matrix of the graph
     adj_matrix = nx.to_numpy_array(G)
     return G, adj_matrix
+
+def generate_pheno_prob_vector(q):
+    random_vec = np.random.rand(q)
+    return random_vec / np.sum(random_vec)
 
 if __name__ == '__main__':
 
@@ -53,12 +59,16 @@ if __name__ == '__main__':
     # random phenotype probability assignment 
     if cfg['phenotype_probs_setup'] == 'random':
         Q = cfg['Q'] # number of phenotypes
-        # TODO: random assignment
+
+        # for each genotype, generate a probability vector mapping it to each phenotype
+        pi = np.zeros((V, Q)) # probability matrix of size # genotypes (V) x # phenotypes (Q)
+        for i in range(V):
+            pi[i] = generate_pheno_prob_vector(Q)
 
     # read in phenotype probability assignment from file 
     elif cfg['phenotype_probs_setup'] == 'file':
         probs_file = cfg['pheno_probs']
-        pi = pd.read_csv(probs_file,delimiter=',',header=None).to_numpy() # g -> p probabilities
+        pi = pd.read_csv(probs_file, delimiter=',', header=None).to_numpy() # g -> p probabilities
 
     # random reproduction probability assignment 
     if cfg['repro_probs_setup'] == 'random':
