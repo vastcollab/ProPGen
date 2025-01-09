@@ -1,8 +1,33 @@
-graph_setup: random # file
 seed: 42
+
+graph_setup: file # random or file
 
 # parameters for random graph generation 
 V: 5 # number of genotypes/nodes
 
-
 # parameters for file-specified graph setup 
+A: data/pathgraph_adj.csv 
+
+# general parameters
+N: 1000 # population size 
+timesteps: 1000 # number of timesteps
+mu: 0.1 # mutation rate
+c: 5 # number offspring produced 
+Trial number: 2
+outdir: test
+
+phenotype_probs_setup: file # random or file
+
+# parameters for random phenotype probability assignment 
+Q: 4 # number of phenotypes
+
+# parameters for file-specified phenotype probability assignment 
+pheno_probs: data/pathgraph_probs.csv
+
+repro_probs_setup: file # random or file
+
+# parameters for random repro probability assignment 
+
+# parameters for file-specified repro probability assignment 
+repro_probs: data/pathgraph_reproprobs.csv
+
