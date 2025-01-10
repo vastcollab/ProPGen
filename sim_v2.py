@@ -1,4 +1,4 @@
-# TODO: Make sure both file-input and random support matrices 
+# TODO: Make sure file-based matrix support works (test)
 
 import numpy as np
 import math
@@ -58,9 +58,6 @@ if __name__ == '__main__':
     trial = cfg['Trial number'] 
     outdir = cfg['outdir']
 
-    print('Adjacency matrix', A)
-    print(A.shape)
-
     # random phenotype probability assignment 
     if cfg['phenotype_probs_setup'] == 'random':
         Q = cfg['Q'] # number of phenotypes
@@ -76,10 +73,6 @@ if __name__ == '__main__':
         pi = pd.read_csv(probs_file, delimiter=',', header=None).to_numpy() # g -> p probabilities
         Q = pi.shape[0]
 
-    print(Q)
-    print('Pi', pi)
-    print(pi.shape)
-
     # random reproduction probability assignment 
     if cfg['repro_probs_setup'] == 'random':
         r = np.random.rand(Q) # random probability for each phenotype
@@ -87,9 +80,6 @@ if __name__ == '__main__':
     elif cfg['repro_probs_setup'] == 'file':
         repro_file = cfg['repro_probs'] 
         r = pd.read_csv(repro_file, delimiter=',', header=None).to_numpy() # probability of each phenotype reproducing at single timestep
-
-    print('r', r)
-    print(r.shape)
 
     ## PrFL dynamics simulation
     starttime = time.time()
@@ -102,39 +92,29 @@ if __name__ == '__main__':
     # phenotype = 0 is high fitness, phenotype = 1 is low fitness
 
     # Gamma refers to the set of individuals in the population
-    Gamma_ind = np.random.randint(0, V, size=(N)) # assign every individual to a genotype
+    Gamma_geno = np.random.randint(0, V, size=(N)) # assign every individual to a genotype
     Gamma_pheno = np.random.randint(0, Q, size=(N)) # assign every individual to a phenotype
 
-    print('Gamma_ind', Gamma_ind)
-    print('Gamma_pheno', Gamma_pheno)
-
     # keep track of frequency time series
-    freq_timeseries = np.zeros((Q*V, T-burn_in)) # (g*p, T)
+    freq_timeseries = np.zeros((V, Q, T-burn_in)) # (g, p, T)
 
     # run simulation
     for t in tqdm(range(T)): 
         if t >= burn_in:
 
             # update frequency time series 
-            Gamma_reindexed = np.zeros((N), dtype=int)
-            for i in range(N):
-                temp = Gamma_ind[i]
-                if Gamma_pheno[i] == 1:
-                    temp += V
-                Gamma_reindexed[i] = temp
-
-            unique, counts = np.unique(Gamma_reindexed, return_counts=True)
+            combined = np.column_stack((Gamma_geno, Gamma_pheno))
+            unique, counts = np.unique(combined, axis=0, return_counts=True) # get unique (g, p) combinations and their counts
 
             freq_temp = counts / N
-            for k in range(len(unique)):
-                freq_timeseries[unique[k],t-burn_in] = freq_temp[k]
-
+            for k in range(len(unique)): # for each unique pair
+                freq_timeseries[unique[k][0], unique[k][1], t-burn_in] = freq_temp[k]
 
             # choose inidividuals from population to reproduce at this timestep
             chosen_to_reproduce = np.where(np.random.binomial(1, np.squeeze(r[Gamma_pheno]), size = N))[0]
 
             # genotypes of offspring for chosen individuals
-            offspring_genotypes = np.repeat(Gamma_ind[chosen_to_reproduce], c)
+            offspring_genotypes = np.repeat(Gamma_geno[chosen_to_reproduce], c)
 
             # offspring mutate according to neighbors
             chosen_to_mutate = np.where(np.random.binomial(1, mu, size = len(offspring_genotypes)))[0]
@@ -147,30 +127,29 @@ if __name__ == '__main__':
 
                 offspring_genotypes[i] = mutation
 
-            # print('New offspring genotypes', offspring_genotypes)
-
             # offspring genotypes are mapped to phenotypes according to pi 
-            pheno_probs = np.squeeze(pi[offspring_genotypes])
-            offspring_phenotypes = 1 - np.random.binomial(np.ones((len(offspring_genotypes)), dtype=int), p=pheno_probs)
+            pheno_probs = pi[offspring_genotypes]
+            offspring_phenotypes = np.array([np.random.choice(len(pi[0]), p=pheno_probs[i]) for i in range(len(offspring_genotypes))])
 
             # add offspring to entire population
-            pop_genotypes = np.concatenate([Gamma_ind, offspring_genotypes])
+            pop_genotypes = np.concatenate([Gamma_geno, offspring_genotypes])
             pop_phenotypes = np.concatenate([Gamma_pheno, offspring_phenotypes])
 
             # selection back to original population size
             select_ids = np.random.choice(len(pop_genotypes), size=N, replace=False)
 
             # update Gamma_ind and Gamma_pheno
-            Gamma_ind = np.array([pop_genotypes[j] for j in select_ids]).astype(int)
+            Gamma_geno = np.array([pop_genotypes[j] for j in select_ids]).astype(int)
             Gamma_pheno = np.array([pop_phenotypes[j] for j in select_ids]).astype(int)
 
         else:
-
             print('ERROR')  
 
     file_suffix =  '_trial' + str(trial)
         
-    np.savetxt(outdir + '/sim2_freq_timeseries' + file_suffix + '.csv', freq_timeseries,delimiter=',')
+    # np.savetxt(outdir + '/sim2_freq_timeseries' + file_suffix + '.csv', freq_timeseries,delimiter=',')
+    with open(outdir + '/sim2_freq_timeseries' + file_suffix + '.pkl', 'wb') as file:
+        pickle.dump(freq_timeseries, file)  
         
     data = {
             'A': A,
@@ -182,7 +161,7 @@ if __name__ == '__main__':
             'repro_probs': r,
             'trial': trial,
             'freq_timeseries': freq_timeseries,
-            'Gamma_ind': Gamma_ind,
+            'Gamma_geno': Gamma_geno,
             'Gamma_pheno': Gamma_pheno
             }
 
