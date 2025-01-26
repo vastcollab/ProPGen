@@ -73,7 +73,7 @@ if __name__ == '__main__':
         probs_file = cfg['pheno_probs']
         # pi = pd.read_csv(probs_file, delimiter=',', header=None).to_numpy() 
         pi = np.loadtxt(probs_file, dtype='float64', encoding='utf-8-sig') # g -> p probabilities
-        Q = pi.shape[0]
+        Q = pi.shape[1]
 
     # random reproduction probability assignment 
     if cfg['repro_probs_setup'] == 'random':
