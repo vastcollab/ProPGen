@@ -16,7 +16,7 @@ c: 5 # number offspring produced
 Trial number: 3
 outdir: test
 
-phenotype_probs_setup: random # random or file
+phenotype_probs_setup: file # random or file
 
 # parameters for random phenotype probability assignment 
 Q: 4 # number of phenotypes

@@ -49,7 +49,7 @@ if __name__ == '__main__':
     elif cfg['graph_setup'] == 'file': 
         A_file = cfg['A']
         # A = pd.read_csv(A_file, delimiter=',', header=None).to_numpy()
-        A = np.loadtxt(A_file, dtype='float64', encoding='utf-8-sig')
+        A = np.loadtxt(A_file, encoding='utf-8-sig')
         V = np.shape(A)[0] 
 
     N = cfg['N']
@@ -71,7 +71,8 @@ if __name__ == '__main__':
     # read in phenotype probability assignment from file 
     elif cfg['phenotype_probs_setup'] == 'file':
         probs_file = cfg['pheno_probs']
-        pi = pd.read_csv(probs_file, delimiter=',', header=None).to_numpy() # g -> p probabilities
+        # pi = pd.read_csv(probs_file, delimiter=',', header=None).to_numpy() 
+        pi = np.loadtxt(probs_file, dtype='float64', encoding='utf-8-sig') # g -> p probabilities
         Q = pi.shape[0]
 
     # random reproduction probability assignment 
