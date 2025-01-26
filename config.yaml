@@ -24,7 +24,7 @@ Q: 4 # number of phenotypes
 # parameters for file-specified phenotype probability assignment 
 pheno_probs: data/pathgraph_probs.csv
 
-repro_probs_setup: random # random or file
+repro_probs_setup: file # random or file
 
 # parameters for random repro probability assignment 
 

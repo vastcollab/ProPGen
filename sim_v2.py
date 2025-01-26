@@ -80,7 +80,8 @@ if __name__ == '__main__':
 
     elif cfg['repro_probs_setup'] == 'file':
         repro_file = cfg['repro_probs'] 
-        r = pd.read_csv(repro_file, delimiter=',', header=None).to_numpy() # probability of each phenotype reproducing at single timestep
+        # r = pd.read_csv(repro_file, delimiter=',', header=None).to_numpy() 
+        r = np.loadtxt(repro_file, dtype='float64', encoding='utf-8-sig') # probability of each phenotype reproducing at single timestep
 
     ## PrFL dynamics simulation
     starttime = time.time()
