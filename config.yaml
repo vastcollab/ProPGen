@@ -1,6 +1,6 @@
 seed: 42
 
-graph_setup: random # random or file
+graph_setup: file # random or file
 
 # parameters for random graph generation 
 V: 5 # number of genotypes/nodes

@@ -48,7 +48,8 @@ if __name__ == '__main__':
     # read in graph from file 
     elif cfg['graph_setup'] == 'file': 
         A_file = cfg['A']
-        A = pd.read_csv(A_file, delimiter=',', header=None).to_numpy()
+        # A = pd.read_csv(A_file, delimiter=',', header=None).to_numpy()
+        A = np.loadtxt(A_file, dtype='float64', encoding='utf-8-sig')
         V = np.shape(A)[0] 
 
     N = cfg['N']
