@@ -73,6 +73,8 @@ if __name__ == '__main__':
         pi = np.loadtxt(probs_file, dtype='float64', encoding='utf-8-sig') # g -> p probabilities
         Q = pi.shape[1]
 
+    print('Number of phenotypes: ' + str(Q))
+
     # random reproduction probability assignment 
     if cfg['repro_probs_setup'] == 'random':
         r = np.random.rand(Q) # random probability for each phenotype
