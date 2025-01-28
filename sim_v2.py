@@ -9,6 +9,12 @@ import pickle
 import networkx as nx
 import matplotlib.pyplot as plt
 import yaml
+import argparse
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Argument Parser')
+    parser.add_argument('--config', type=str, help='Path to the config file')
+    return parser.parse_args()
 
 def generate_erdos_renyi_graph(n, p, seed=None):
     # generate the ER graph with n nodes and edge probability p
@@ -28,8 +34,11 @@ def generate_pheno_prob_vector(q):
 
 if __name__ == '__main__':
 
+    args = parse_arguments()
+    config_file = args.config
+
     # parse config file 
-    with open('config.yaml', 'r') as f:
+    with open(config_file, 'r') as f:
         cfg = yaml.safe_load(f)
 
     seed = cfg['seed']
