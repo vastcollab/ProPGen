@@ -155,7 +155,7 @@ if __name__ == '__main__':
         else:
             print('ERROR')  
 
-    file_suffix =  '_trial' + str(trial)
+    file_suffix =  '_exp_test' + str(trial)
         
     # np.savetxt(outdir + '/sim2_freq_timeseries' + file_suffix + '.csv', freq_timeseries,delimiter=',')
     with open(outdir + '/sim2_freq_timeseries' + file_suffix + '.pkl', 'wb') as file:
@@ -175,5 +175,5 @@ if __name__ == '__main__':
             'Gamma_pheno': Gamma_pheno
             }
 
-    with open(outdir + '/sim2_data' + file_suffix + '.pkl', 'wb') as file:
+    with open(outdir + '/sim' + file_suffix + '.pkl', 'wb') as file:
         pickle.dump(data, file)  
