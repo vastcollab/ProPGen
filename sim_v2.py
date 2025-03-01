@@ -10,6 +10,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import yaml
 import argparse
+import sys
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Argument Parser')
@@ -65,6 +66,13 @@ if __name__ == '__main__':
     c = cfg['c']
     trial = cfg['Trial number'] 
     outdir = cfg['outdir']
+
+    if len(sys.argv) > 1:
+        config_file_name = sys.argv[2]
+        file_suffix = config_file_name.split('/')[2].split('_', 1)[1].split('.')[0] + '_trial_' + str(trial)
+    else:
+        file_suffix = 'no_config_sim'
+        print("No config file provided")
 
     # random phenotype probability assignment 
     if cfg['phenotype_probs_setup'] == 'random':
@@ -154,11 +162,8 @@ if __name__ == '__main__':
 
         else:
             print('ERROR')  
-
-    file_suffix =  '_exp_test' + str(trial)
         
-    # np.savetxt(outdir + '/sim2_freq_timeseries' + file_suffix + '.csv', freq_timeseries,delimiter=',')
-    with open(outdir + '/sim2_freq_timeseries' + file_suffix + '.pkl', 'wb') as file:
+    with open(outdir + '/freq_timeseries_' + file_suffix + '.pkl', 'wb') as file:
         pickle.dump(freq_timeseries, file)  
         
     data = {
@@ -175,5 +180,5 @@ if __name__ == '__main__':
             'Gamma_pheno': Gamma_pheno
             }
 
-    with open(outdir + '/sim' + file_suffix + '.pkl', 'wb') as file:
+    with open(outdir + '/sim_data_' + file_suffix + '.pkl', 'wb') as file:
         pickle.dump(data, file)  
