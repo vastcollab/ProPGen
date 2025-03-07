@@ -30,19 +30,10 @@ def calc_f_eq(pheno_probs,repro_probs,A,mu,c):
     eigvecs = eig_decomp.eigenvectors
 
     # equilibrium frequency vec is the eigenvector with all elements having the same sign
-<<<<<<< HEAD
-    ind_list = np.where(np.sum(eigvecs > 0,axis=0) == Ng * Np)[0]
-    if len(np.where(np.sum(eigvecs > 0,axis=0) == Ng * Np)[0]) == 0:
-        ind = np.where(np.sum(eigvecs < 0,axis=0) == 0)[0][0]
-    else:
-        ind = ind_list[0]
-    # print(len(np.where(np.sum(eigvecs < 0,axis=0) == Ng * Np)[0]),'eyy')
-=======
     ind_list = np.where(np.sum(eigvecs >= 0,axis=0) == Ng * Np)[0]
     if len(ind_list) == 0:
         ind_list = np.where(np.sum(eigvecs < 0,axis=0) == Ng * Np)[0]
     
->>>>>>> 4712d2362cbdad1ad3b4c172e318fe0120286547
     f_eq_unnormalized = eigvecs[:,ind_list[0]]
     Xbar_theory = eig_decomp.eigenvalues[ind_list[0]]
 
