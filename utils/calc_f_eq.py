@@ -35,6 +35,7 @@ def calc_f_eq(pheno_probs,repro_probs,A,mu,c):
         ind = np.where(np.sum(eigvecs > 0,axis=0) == 0)[0][0]
     else:
         ind = ind_list[0]
+    # print(len(np.where(np.sum(eigvecs < 0,axis=0) == Ng * Np)[0]),'eyy')
     f_eq_unnormalized = eigvecs[:,ind_list[0]]
     Xbar_theory = eig_decomp.eigenvalues[ind]
 

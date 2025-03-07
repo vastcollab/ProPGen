@@ -69,7 +69,7 @@ if __name__ == '__main__':
     outdir = cfg['outdir']
 
     if len(sys.argv) > 1:
-        config_file_name = sys.argv[2]
+        config_file_name = sys.argv[1]
         file_suffix = config_file_name.split('/')[2].split('_', 1)[1].split('.')[0] + '_trial_' + str(trial)
     else:
         file_suffix = 'no_config_sim'
