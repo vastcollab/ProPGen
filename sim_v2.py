@@ -10,6 +10,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import yaml
 import argparse
+import utils.calc_f_eq
 import sys
 
 def parse_arguments():
@@ -165,6 +166,9 @@ if __name__ == '__main__':
         
     with open(outdir + '/freq_timeseries_' + file_suffix + '.pkl', 'wb') as file:
         pickle.dump(freq_timeseries, file)  
+
+    # calculate theoretical equilibrium frequencies and mean fitness
+    f_eq, Xbar_theory = utils.calc_f_eq.calc_f_eq(pheno_probs=pi,repro_probs=r,A=A,mu=mu,c=c)
         
     data = {
             'A': A,
@@ -177,7 +181,9 @@ if __name__ == '__main__':
             'trial': trial,
             'freq_timeseries': freq_timeseries,
             'Gamma_geno': Gamma_geno,
-            'Gamma_pheno': Gamma_pheno
+            'Gamma_pheno': Gamma_pheno,
+            'f_eq': f_eq,
+            'Xbar_theory': Xbar_theory
             }
 
     with open(outdir + '/sim_data_' + file_suffix + '.pkl', 'wb') as file:
