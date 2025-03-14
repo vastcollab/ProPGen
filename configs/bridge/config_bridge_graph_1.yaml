@@ -9,7 +9,7 @@ graph_setup: file # random or file
 A: data/bridge_adj.csv 
 
 # general parameters
-N: 1000 # population size 
+N: 10000 # population size 
 timesteps: 1000 # number of timesteps
 mu: 0.1 # mutation rate
 c: 5 # number offspring produced 
