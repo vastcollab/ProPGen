@@ -106,16 +106,34 @@ if __name__ == '__main__':
     # constants
     burn_in = 0 # time before starting to record frequency vec
 
-    # initialize population
-    # population randomly initialized across genotypes and phenotypes
-    # phenotype = 0 is high fitness, phenotype = 1 is low fitness
+    #############################
+    ### initialize population ###
+    #############################
+
+    # population randomly initialized across genotypes and phenotypes, unless 
+    # specified (G, P) has 0 probability
+
+    allowed_pairs = []
+    for g in range(V):
+        for p in range(Q):
+            if pi[g, p] > 0:  # check whether this (g, p) pair has nonzero probability
+                allowed_pairs.append((g, p))
+    
+    num_allowed_pairs = len(allowed_pairs)
+    indices = np.random.choice(num_allowed_pairs, size=N, replace=True) # sample with replacement
 
     # Gamma refers to the set of individuals in the population
-    Gamma_geno = np.random.randint(0, V, size=(N)) # assign every individual to a genotype
-    Gamma_pheno = np.random.randint(0, Q, size=(N)) # assign every individual to a phenotype
+    Gamma_geno = np.array([allowed_pairs[i][0] for i in indices])
+    Gamma_pheno = np.array([allowed_pairs[i][1] for i in indices])
+    # Gamma_geno = np.random.randint(0, V, size=(N)) # assign every individual to a genotype
+    # Gamma_pheno = np.random.randint(0, Q, size=(N)) # assign every individual to a phenotype
 
     # keep track of frequency time series
     freq_timeseries = np.zeros((V, Q, T-burn_in)) # (g, p, T)
+
+    ######################
+    ### run simulation ###
+    ######################
 
     # run simulation
     for t in tqdm(range(T)): 
