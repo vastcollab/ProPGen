@@ -118,8 +118,8 @@ if __name__ == '__main__':
 
     # modify mapping probs
         
-    pi[1][0] = 1 - mapping_prob
-    pi[1][1] = mapping_prob # how much prob does the bridge have
+    pi[1][0] = 1 - mapping_prob # how much prob does the bridge have
+    pi[1][1] = mapping_prob 
         
     # modify repro probs
     r[1] = repro_prob # smaller reproprob
