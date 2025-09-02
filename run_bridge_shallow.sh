@@ -4,8 +4,8 @@
 PARALLEL=36  
 
 # sweep over mapping probability, repro_prob, and trials
-for map in $(seq 0 0.5 1); do
-  for repro in 0.002 0.0002; do
+for map in $(seq 0 0.05 1); do
+  for repro in 0.002; do
     for trial in $(seq 1 100); do
       echo "python bridge_sims.py \
            --config=configs/bridge/bridge_sims.yaml \
