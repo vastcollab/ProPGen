@@ -88,7 +88,7 @@ if __name__ == '__main__':
     num_gens = cfg['num_gens'] # number of generations before dilution / downsampling
 
     if len(sys.argv) > 1:
-        file_suffix = f"map_{mapping_prob:.2f}_fit_{repro_prob:.2f}_trial_{trial}"
+        file_suffix = f"map_{mapping_prob}_fit_{repro_prob}_trial_{trial}"
 
     # random phenotype probability assignment 
     if cfg['phenotype_probs_setup'] == 'random':
