@@ -1,9 +1,5 @@
-# R4: Evolutionary Dynamics on Fitness Landscapes with Probabilistic Genotype-Phenotype Mapping
+# R4: Evolutionary dynamics under phenotypic uncertainty
 
 Working code for VAST R4.
 
-### Simulations 
 
-To run the evolutionary dynamics simulation for a given config file, use the command:
-
-```python sim_v2.py --config=<config_name>.yaml```
