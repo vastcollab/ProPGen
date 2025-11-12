@@ -22,6 +22,7 @@ def parse_arguments():
     parser.add_argument('--config', type=str, help='Path to the config file')
     parser.add_argument('--trial', type=int, help='Trial number')
     parser.add_argument('--out', type=str, default=None, help="Output filename for results (overrides default naming)")
+    parser.add_argument('--env_time', type=int, default=100, help='Environment switching time')
     return parser.parse_args()
 
 if __name__ == '__main__':
@@ -48,7 +49,7 @@ if __name__ == '__main__':
     elif cfg['graph_setup'] == 'file': 
         A_file = cfg['A']
         # A = pd.read_csv(A_file, delimiter=',', header=None).to_numpy()
-        A = np.loadtxt(A_file, encoding='utf-8-sig')
+        A = np.array([np.loadtxt(A_file, encoding='utf-8-sig')])
         V = np.shape(A)[0] 
 
     N = cfg['N']
@@ -80,7 +81,8 @@ if __name__ == '__main__':
         probs_file = cfg['pheno_probs']
         # pi = pd.read_csv(probs_file, delimiter=',', header=None).to_numpy() 
         pi = np.loadtxt(probs_file, dtype='float64', encoding='utf-8-sig') # g -> p probabilities
-        Q = pi.shape[1]
+        pi = pi.reshape(1, 2)
+        Q = pi.shape[1] 
 
     # random reproduction probability assignment 
     if cfg['repro_probs_setup'] == 'file':
@@ -167,7 +169,7 @@ if __name__ == '__main__':
                 # map genotypes to phenotypes
                 pheno_probs = pi[offspring_genotypes]
                 offspring_phenotypes = np.array([
-                    np.random.choice(len(pi[0]), p=pheno_probs[i]) for i in range(len(offspring_genotypes))
+                    np.random.choice(Q, p=pheno_probs[i]) for i in range(len(offspring_genotypes))
                 ])
 
                 # add offspring to the population
@@ -193,7 +195,7 @@ if __name__ == '__main__':
     #     pickle.dump(freq_timeseries, file)  
 
     # calculate theoretical equilibrium frequencies and mean fitness
-    f_eq, Xbar_theory = utils.calc_f_eq.calc_f_eq(pheno_probs=pi,repro_probs=r,A=A,mu=mu,c=c)
+    # f_eq, Xbar_theory = utils.calc_f_eq.calc_f_eq(pheno_probs=pi,repro_probs=r,A=A,mu=mu,c=c)
         
     data = {
             'A': A,
@@ -202,14 +204,14 @@ if __name__ == '__main__':
             'mu': mu,
             'c': c,
             'pheno_probs': pi,
-            'repro_probs_1': r1,
-            'repro_probs_2': r2,
+            'repro_probs_1': r_1,
+            'repro_probs_2': r_2,
             'trial': trial,
             'freq_timeseries': freq_timeseries,
             'Gamma_geno': Gamma_geno,
             'Gamma_pheno': Gamma_pheno,
-            'f_eq': f_eq,
-            'Xbar_theory': Xbar_theory
+            # 'f_eq': f_eq,
+            # 'Xbar_theory': Xbar_theory
             }
 
     with open(outdir + '/sim_data_' + file_suffix + '.pkl', 'wb') as file:
