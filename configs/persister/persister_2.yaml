@@ -12,11 +12,11 @@ c: 1 # number offspring produced
 num_gens: 10
 
 phenotype_probs_setup: file # random or file
-pheno_probs: data/persister/persister_probs.csv
+pheno_probs_1: data/persister/persister_probs_1.csv
+pheno_probs_2: data/persister/persister_probs_2.csv
+
 
 repro_probs_setup: file # random or file
 # parameters for file-specified repro probability assignment for both environments
 repro_probs_1: data/persister/persister_reproprobs_1.csv
 repro_probs_2: data/persister/persister_reproprobs_2.csv
-
-

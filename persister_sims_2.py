@@ -78,11 +78,16 @@ if __name__ == '__main__':
 
     # read in phenotype probability assignment from file 
     elif cfg['phenotype_probs_setup'] == 'file':
-        probs_file = cfg['pheno_probs']
-        # pi = pd.read_csv(probs_file, delimiter=',', header=None).to_numpy() 
-        pi = np.loadtxt(probs_file, dtype='float64', encoding='utf-8-sig') # g -> p probabilities
-        pi = pi.reshape(1, 2)
-        Q = pi.shape[1] 
+        probs_file_1 = cfg['pheno_probs_1']
+        probs_file_2 = cfg['pheno_probs_2']
+
+        pi_1 = np.loadtxt(probs_file_1, dtype='float64', encoding='utf-8-sig') # g -> p probabilities
+        pi_1 = pi_1.reshape(1, 2)
+
+        pi_2 = np.loadtxt(probs_file_2, dtype='float64', encoding='utf-8-sig') # g -> p probabilities
+        pi_2 = pi_2.reshape(1, 2)
+
+        Q = pi_1.shape[1] 
 
     # random reproduction probability assignment 
     if cfg['repro_probs_setup'] == 'file':
@@ -93,6 +98,7 @@ if __name__ == '__main__':
 
     # start in environment 1
     r = r_1.copy()
+    pi = pi_1.copy()
     env_index = 0  # 0 = env1, 1 = env2
 
     ## PrFL dynamics simulation
@@ -136,10 +142,12 @@ if __name__ == '__main__':
         if t > 0 and t == 100: # t % env_time == 0:
             if env_index == 0:
                 r = r_2.copy()
+                pi = pi_2.copy()
                 env_index = 1
                 print(f"SWITCH to r2 at timestep {t}")
             else:
                 r = r_1.copy()
+                pi = pi_1.copy()
                 env_index = 0
                 print(f"SWITCH to r1 at timestep {t}")
 
