@@ -11,6 +11,7 @@ Descriptions of each folder:
 Descriptions of other files:
 
 .py files contain simulation code for each category of simulation (e.g. buoy, bridge)
+
 .sh files run multiple trials and parameter settings of a given simulation file
   
 
