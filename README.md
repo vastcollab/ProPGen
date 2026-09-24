@@ -16,7 +16,7 @@ pip install -e ".[figures]"
 propgen info
 ```
 
-Requires Python 3.10 or later. Dependencies are `numpy`, `scipy`, `pyyaml` and `tqdm`, plus `matplotlib` and `mpmath` for the figures. Installation takes a few seconds; there is nothing to compile and nothing to download.
+Requires Python 3.10 or later. Dependencies are `numpy`, `scipy`, `pyyaml` and `tqdm`, plus `matplotlib` and `mpmath` for the figures. 
 
 ## Quickstart
 
