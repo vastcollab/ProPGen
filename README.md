@@ -169,7 +169,7 @@ propgen aggregate --raw results/bridge/raw --out results/bridge/summary.npz --th
 bash scripts/make_figures.sh
 ```
 
-The persister, coexistence-phase-diagram and rugged-landscape panels are analytic and do not require simulations. The phase diagram is computed exactly, by evaluating the equilibrium frequency orderings over a parameter grid:
+The persister and coexistence-phase-diagram panels are analytic and do not require simulations. The phase diagram is computed exactly, by evaluating the equilibrium frequency orderings over a parameter grid:
 
 ```python
 from propgen import phase_diagram

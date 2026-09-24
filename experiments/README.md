@@ -6,7 +6,6 @@ and measured runtimes.
 
 | Result | Directory | Data needed | Full-scale runtime (1 core) |
 | --- | --- | --- | --- |
-| Rugged-landscape schematic | `landscape_diagram/` | none | 3 s |
 | Persister resuscitation and partitioning | `persister/` | none (closed form) | 2 s |
 | Coexistence phase diagram | `phasediag/` | none (analytic) | 3 s |
 | Mean fitness from a non-equilibrium start | `meanfit/` | 5 runs | 1 s |
