@@ -18,9 +18,9 @@ propgen info
 
 Requires Python 3.10 or later. Dependencies are `numpy`, `scipy`, `pyyaml` and `tqdm`, plus `matplotlib` and `mpmath` for the figures. 
 
-## Quickstart
+## ProSeD Quickstart
 
-Run ProSeD on a model defined directly in NumPy, and compare it to the analytic prediction:
+Example demonstrating how to run a ProSeD simulation on user inputted data and compare with the analytic prediction:
 
 ```python
 import numpy as np
@@ -45,11 +45,9 @@ result = simulate(
 
 f_eq, mean_fitness = equilibrium(landscape, mutation_rate=0.1)
 
-print(result.final_frequencies(last=100).ravel())   # simulated
+print(result.final_frequencies(last=100).ravel())   # ProSeD simulated
 print(f_eq)                                         # analytic
 ```
-
-The two agree to about 0.001 in frequency, in under a second.
 
 From the command line, on files instead of arrays:
 
