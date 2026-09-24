@@ -1,0 +1,23 @@
+# Phenotypic bridges and fitness-valley crossing.
+#
+# A population fixed at genotype 0 must reach genotype 2 by passing through
+# genotype 1, whose reproduction rate is low. Genotype 1 expresses the
+# high-fitness phenotype with probability phi -- the "phenotypic bridge".
+#
+# experiments/bridge sweeps phi and the valley depth.
+
+experiment: bridge
+seed: 42
+
+landscape:
+  adjacency:   ../data/bridge/adjacency.txt
+  pheno_probs: ../data/bridge/pheno_probs.txt
+  repro_probs: ../data/bridge/repro_probs.txt
+
+simulation:
+  pop_size: 10000
+  n_cycles: 30000              # dilution cycles, not generations
+  generations_per_cycle: 10
+  offspring_per_division: 1
+  mutation_rate: 0.1
+  init: {kind: at, genotype: 0, phenotype: 0}

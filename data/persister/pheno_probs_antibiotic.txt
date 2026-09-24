@@ -1,0 +1,3 @@
+# Genotype -> phenotype map under antibiotic: the population shifts toward
+# the persister state.
+0.2 0.8

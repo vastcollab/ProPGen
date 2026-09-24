@@ -1,0 +1,2 @@
+# Under antibiotic: normal cells are killed, persisters survive and grow.
+0.0 0.05

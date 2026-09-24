@@ -1,0 +1,4 @@
+# Probabilistic genotype -> phenotype map (PrGP): each genotype expresses a
+# distribution over phenotypes. This is the ProP Gen case.
+0.4 0.6
+0.7 0.3

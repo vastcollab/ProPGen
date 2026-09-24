@@ -1,0 +1,3 @@
+# A single genotype with a self-loop: this model has no mutation, only
+# phenotype switching between the normal and persister states.
+1

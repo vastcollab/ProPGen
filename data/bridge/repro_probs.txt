@@ -1,0 +1,4 @@
+# Per-phenotype probability of dividing in one generation.
+# repro_probs[1] sets the valley depth and is swept over
+#   0.002 (shallow), 0.0008 (mid), 0.0002 (deep).
+0.009 0.0002

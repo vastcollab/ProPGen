@@ -1,0 +1,21 @@
+# Absolute-fitness non-invariance, deterministic genotype-phenotype map (DGP).
+#
+# The classical control: each genotype expresses one phenotype with certainty.
+# Shifting both reproduction rates by a constant leaves the dynamics unchanged,
+# as classical population genetics predicts. Compare with absfit_prgp.yaml.
+
+experiment: absfit_dgp
+seed: 42
+
+landscape:
+  adjacency:   ../data/absfit/adjacency.txt
+  pheno_probs: ../data/absfit/pheno_probs_dgp.txt
+  repro_probs: ../data/absfit/repro_probs.txt
+
+simulation:
+  pop_size: 10000
+  n_cycles: 500
+  generations_per_cycle: 10
+  offspring_per_division: 1
+  mutation_rate: 0.0
+  init: {kind: uniform_over_support}

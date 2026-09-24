@@ -1,0 +1,11 @@
+# Genotype -> phenotype map. Rows are genotypes, columns are phenotypes.
+# Phenotype 0 is high-fitness, phenotype 1 is low-fitness (see repro_probs.txt).
+#
+# Row 1 is the bridge genotype and is what experiments/bridge sweeps:
+#   pheno_probs[1] = [phi, 1 - phi]
+# where phi is the probability that the valley genotype expresses the
+# high-fitness phenotype. phi = 0 is the classical deterministic valley.
+# The value below is phi = 0.1.
+1.0 0.0
+0.1 0.9
+1.0 0.0
