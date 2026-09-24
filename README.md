@@ -154,7 +154,18 @@ propgen aggregate --raw results/bridge/raw --out results/bridge/summary.npz --th
 bash scripts/make_figures.sh
 ```
 
-The persister and rugged-landscape panels are closed-form and need no simulation or stored data at all.
+The persister, coexistence-phase-diagram and rugged-landscape panels are analytic and need no simulation or stored data at all. The phase diagram in particular is computed exactly, by evaluating the Perron-Frobenius equilibrium over a grid in mutation rate and genotype-phenotype map:
+
+```python
+from propgen import phase_diagram
+
+diagram = phase_diagram(
+    landscape,
+    mutation_rates=np.linspace(0.005, 0.5, 100),
+    pheno_prob_values=np.linspace(0.0, 1.0, 100),
+)
+diagram.phase       # (100, 100) phase labels; ten distinct coexistence phases
+```
 
 Every experiment has a `--quick` preset that reduces population size, cycle count and trial count — and nothing else, so the model being exercised is identical. One command runs the entire pipeline end to end:
 

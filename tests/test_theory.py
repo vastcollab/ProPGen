@@ -103,3 +103,48 @@ def test_coexistence_ordering_ranks_pairs_by_frequency():
 def test_no_equilibrium_error_is_importable():
     """The failure mode has a named exception rather than an IndexError."""
     assert issubclass(NoEquilibriumError, RuntimeError)
+
+
+def test_phase_diagram_partitions_the_grid():
+    """Every grid point is assigned to exactly one known phase."""
+    from propgen import phase_diagram
+
+    diagram = phase_diagram(
+        LANDSCAPE,
+        mutation_rates=np.linspace(0.01, 0.5, 8),
+        pheno_prob_values=np.linspace(0.0, 1.0, 8),
+        genotype=1,
+    )
+    assert diagram.phase.shape == (8, 8)
+    assert diagram.f_eq.shape == (8, 8, 4)
+    assert diagram.phase.min() >= 0
+    assert diagram.phase.max() == len(diagram.orderings) - 1
+    assert np.allclose(diagram.f_eq.sum(axis=-1), 1.0)
+
+
+def test_phase_labels_are_consistent_with_the_frequencies():
+    """A cell's phase ordering really is the argsort of its equilibrium."""
+    from propgen import coexistence_ordering, phase_diagram
+
+    diagram = phase_diagram(
+        LANDSCAPE,
+        mutation_rates=np.linspace(0.01, 0.4, 5),
+        pheno_prob_values=np.linspace(0.1, 0.9, 5),
+        genotype=1,
+    )
+    for i in range(5):
+        for j in range(5):
+            expected = coexistence_ordering(diagram.f_eq[i, j])
+            assert diagram.orderings[diagram.phase[i, j]] == expected
+
+
+def test_phase_diagram_rejects_more_than_two_phenotypes():
+    from propgen import phase_diagram
+
+    wide = Landscape(
+        adjacency=np.array([[0.0, 1.0], [1.0, 0.0]]),
+        pheno_probs=np.full((2, 3), 1 / 3),
+        repro_probs=np.array([0.01, 0.005, 0.002]),
+    )
+    with pytest.raises(ValueError, match="2 phenotypes"):
+        phase_diagram(wide, mutation_rates=[0.1], pheno_prob_values=[0.5])

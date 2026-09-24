@@ -43,10 +43,12 @@ from .prosed import ProSeD, simulate
 from .results import SimResult, load
 from .theory import (
     NoEquilibriumError,
+    PhaseDiagram,
     calc_f_eq,
     coexistence_ordering,
     equilibrium,
     evolution_operator,
+    phase_diagram,
 )
 
 __all__ = [
@@ -65,6 +67,8 @@ __all__ = [
     "calc_f_eq",
     "evolution_operator",
     "coexistence_ordering",
+    "phase_diagram",
+    "PhaseDiagram",
     "NoEquilibriumError",
     # Results
     "SimResult",

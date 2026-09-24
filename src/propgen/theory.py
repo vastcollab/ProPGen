@@ -21,11 +21,16 @@ eigensolver path for large landscapes.
 from __future__ import annotations
 
 import warnings
+from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 import numpy as np
 import scipy.linalg
 
 from .landscape import Landscape
+
+if TYPE_CHECKING:
+    from numpy.typing import ArrayLike
 
 __all__ = [
     "NoEquilibriumError",
@@ -33,6 +38,8 @@ __all__ = [
     "equilibrium",
     "coexistence_ordering",
     "evolution_operator",
+    "PhaseDiagram",
+    "phase_diagram",
 ]
 
 # Landscapes larger than this switch to a sparse eigensolver by default;
@@ -240,3 +247,114 @@ def coexistence_ordering(f_eq: np.ndarray) -> tuple[int, ...]:
     diagram: each distinct ordering is one phase.
     """
     return tuple(int(i) for i in np.argsort(-np.asarray(f_eq)))
+
+
+@dataclass
+class PhaseDiagram:
+    """Coexistence phases over a two-parameter grid.
+
+    Attributes
+    ----------
+    mutation_rates, pheno_prob_values
+        The grid coordinates, of length ``n_mu`` and ``n_phi``.
+    phase
+        ``(n_mu, n_phi)`` integer labels indexing :attr:`orderings`.
+    orderings
+        The distinct rank orderings found, each a tuple of flattened ``(g, p)``
+        indices in decreasing equilibrium frequency.
+    f_eq
+        ``(n_mu, n_phi, Ng*Np)`` equilibrium frequencies at every grid point.
+    """
+
+    mutation_rates: np.ndarray
+    pheno_prob_values: np.ndarray
+    phase: np.ndarray
+    orderings: list[tuple[int, ...]]
+    f_eq: np.ndarray
+
+    def label(self, index: int, n_phenotypes: int) -> str:
+        """LaTeX label for one phase, e.g. ``$f_0^{(1)} > f_0^{(0)} > ...$``."""
+        terms = [
+            f"$f_{{{i // n_phenotypes}}}^{{({i % n_phenotypes})}}$"
+            for i in self.orderings[index]
+        ]
+        return " > ".join(terms)
+
+    def __repr__(self) -> str:
+        return (
+            f"PhaseDiagram(grid={self.phase.shape}, "
+            f"n_phases={len(self.orderings)})"
+        )
+
+
+def phase_diagram(
+    landscape: Landscape,
+    *,
+    mutation_rates: ArrayLike,
+    pheno_prob_values: ArrayLike,
+    genotype: int = 1,
+    offspring_per_division: float = 1.0,
+) -> PhaseDiagram:
+    """Map the coexistence phases of a landscape over (mutation rate, phi).
+
+    At each grid point the genotype-to-phenotype distribution of ``genotype``
+    is set to ``[v, 1 - v]`` and the analytic equilibrium is computed. Grid
+    points are grouped by the *rank ordering* of the resulting
+    genotype-phenotype frequencies; each distinct ordering is a phase of
+    simultaneous coexistence.
+
+    This is exact and requires no simulation: a 50x50 grid takes under a
+    second. Currently limited to two-phenotype landscapes, since the sweep
+    parametrises a single row as ``[v, 1 - v]``.
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> from propgen import Landscape, phase_diagram
+    >>> ls = Landscape(
+    ...     adjacency=np.array([[0.0, 1.0], [1.0, 0.0]]),
+    ...     pheno_probs=np.array([[0.4, 0.6], [0.5, 0.5]]),
+    ...     repro_probs=np.array([0.009, 0.002]),
+    ... )
+    >>> diagram = phase_diagram(
+    ...     ls, mutation_rates=np.linspace(0.01, 0.5, 5),
+    ...     pheno_prob_values=np.linspace(0.0, 1.0, 5),
+    ... )
+    >>> diagram.phase.shape
+    (5, 5)
+    """
+    if landscape.n_phenotypes != 2:
+        raise ValueError(
+            f"phase_diagram sweeps a row as [v, 1 - v] and so needs 2 phenotypes, "
+            f"got {landscape.n_phenotypes}"
+        )
+
+    mutation_rates = np.asarray(mutation_rates, dtype=np.float64)
+    pheno_prob_values = np.asarray(pheno_prob_values, dtype=np.float64)
+
+    dim = landscape.n_genotypes * landscape.n_phenotypes
+    phase = np.empty((mutation_rates.size, pheno_prob_values.size), dtype=np.int64)
+    all_f_eq = np.empty((mutation_rates.size, pheno_prob_values.size, dim))
+
+    seen: dict[tuple[int, ...], int] = {}
+    orderings: list[tuple[int, ...]] = []
+
+    for i, mu in enumerate(mutation_rates):
+        for j, v in enumerate(pheno_prob_values):
+            local = landscape.with_pheno_probs(genotype, [v, 1.0 - v])
+            f_eq, _ = equilibrium(local, mu, offspring_per_division)
+            all_f_eq[i, j] = f_eq
+
+            ordering = coexistence_ordering(f_eq)
+            if ordering not in seen:
+                seen[ordering] = len(orderings)
+                orderings.append(ordering)
+            phase[i, j] = seen[ordering]
+
+    return PhaseDiagram(
+        mutation_rates=mutation_rates,
+        pheno_prob_values=pheno_prob_values,
+        phase=phase,
+        orderings=orderings,
+        f_eq=all_f_eq,
+    )
