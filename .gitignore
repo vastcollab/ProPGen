@@ -12,6 +12,7 @@ venv/
 # summaries under results/*/summary*.npz are committed.
 results/**/raw/
 results/**/raw_*/
+results/**/*_quick.npz
 results/**/*.pkl
 sim_results/
 

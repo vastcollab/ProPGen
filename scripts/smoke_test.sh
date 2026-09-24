@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Exercise the whole pipeline end to end at reduced scale: simulate, aggregate
-# and plot every experiment. Takes a few minutes on 8 cores and needs no
+# and plot every experiment. Takes well under a minute on 8 cores and needs no
 # pre-existing data.
 #
 # This verifies that the pipeline runs. It does NOT reproduce the published

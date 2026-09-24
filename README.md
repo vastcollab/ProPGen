@@ -124,7 +124,7 @@ simulation:
 Aggregated results (mean ± SEM across trials) for every experiment are committed under `results/`, totalling 4.8 MB. **Every figure therefore reproduces from a fresh clone with no downloads and no simulation.**
 
 ```
-# All figures, from the committed summaries (~1 min)
+# All figures, from the committed summaries (~30 s)
 bash scripts/make_figures.sh
 ```
 
@@ -159,7 +159,7 @@ The persister and rugged-landscape panels are closed-form and need no simulation
 Every experiment has a `--quick` preset that reduces population size, cycle count and trial count — and nothing else, so the model being exercised is identical. One command runs the entire pipeline end to end:
 
 ```
-# Simulate, aggregate and plot everything at reduced scale (~5 min on 8 cores)
+# Simulate, aggregate and plot everything at reduced scale (~40 s on 8 cores)
 bash scripts/smoke_test.sh
 ```
 
