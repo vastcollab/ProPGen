@@ -6,7 +6,7 @@ Classical population genetics has relied on the same stochastic differential equ
 
 The standard Wright-Fisher branching process cannot represent phenotypic uncertainty correctly, because it treats phenotype as inherited rather than re-expressed. This repository implements the alternative introduced in the paper, **ProSeD** (Probabilistic Serial Dilution): a discrete-time algorithm with overlapping generations, phenotypic noise and stochastic phenotype switching, modelled on a laboratory serial-passaging experiment.
 
-The package is general — ProSeD runs on any genotype-phenotype map you supply, not only the models in the paper.
+The codebase allows users to run ProSeD simulations on any genotype-phenotype map a user supplies as well as recreate simulations from our paper. 
 
 ## Installation
 
