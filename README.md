@@ -49,7 +49,7 @@ print(result.final_frequencies(last=100).ravel())   # ProSeD simulated
 print(f_eq)                                         # analytic
 ```
 
-From the command line, on files instead of arrays:
+Example of how to run ProSeD on files in the command line:
 
 ```
 # Run one simulation
@@ -73,7 +73,7 @@ propgen aggregate --raw results/buoy/raw --out results/buoy/summary.npz
 
 ## Input files
 
-A model is three whitespace-delimited text matrices:
+A ProSeD simulation requires three files:
 
 ```
 adjacency.txt     (Ng, Ng)   genotype mutation graph, symmetric, 0/1
@@ -81,9 +81,11 @@ pheno_probs.txt   (Ng, Np)   P(phenotype | genotype); each row sums to 1
 repro_probs.txt   (Np,)      division probability per phenotype, in [0, 1]
 ```
 
-Genotypes are rows, phenotypes are columns, and flattened `(g, p)` vectors are row-major, so index `g * Np + p` is the pair `(g, p)`. Landscapes are validated on construction, so malformed input fails immediately rather than producing wrong dynamics. See [`data/README.md`](data/README.md) for the models used in the paper.
+Genotypes are rows, phenotypes are columns.
 
-## Configuration
+## Configs
+
+Example set up for a configuration file:
 
 ```yaml
 experiment: buoy
@@ -96,14 +98,32 @@ landscape:
 
 simulation:
   pop_size: 10000
-  n_cycles: 250                  # dilution cycles, NOT generations
+  n_cycles: 250                  # dilution cycles
   generations_per_cycle: 10      # reproduction rounds between dilutions
   offspring_per_division: 1
   mutation_rate: 0.1
-  init: {kind: uniform_over_support}
+  init: {kind: at, genotype: 0, phenotype: 0}
 ```
 
-`init` may be `uniform_over_support`, `{kind: at, genotype: g, phenotype: p}`, or `{kind: frequencies, values: [...]}`.
+`init` sets where the population starts on cycle 0. Every individual has a genotype (a row) and a phenotype (a column), so `init` specifies how the population is distributed over those `(genotype, phenotype)` pairs at the start. There are three choices:
+
+**1. Start everyone at one pair** — the whole population begins identical, at a single genotype and phenotype:
+
+```yaml
+init: {kind: at, genotype: 0, phenotype: 0}
+```
+
+**2. Spread the population evenly across all possible pairs** — every pair that a genotype can actually express (i.e. every `(g, p)` with `pheno_probs[g, p] > 0`) gets an equal share:
+
+```yaml
+init: uniform_over_support
+```
+
+**3. Start from a distribution you specify** — give the fraction of the population at each pair; the values are normalized to sum to 1. Useful for starting deliberately away from equilibrium:
+
+```yaml
+init: {kind: frequencies, values: [0.7, 0.0, 0.3, 0.0]}
+```
 
 A switching environment declares several environments and a schedule — see [`configs/persister.yaml`](configs/persister.yaml):
 
