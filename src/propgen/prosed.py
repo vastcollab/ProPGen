@@ -43,7 +43,8 @@ from typing import Literal
 
 import numpy as np
 
-from . import initialization, schedule as schedule_mod
+from . import initialization
+from . import schedule as schedule_mod
 from .landscape import Landscape
 from .results import SimResult
 from .theory import NoEquilibriumError, equilibrium

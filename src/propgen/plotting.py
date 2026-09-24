@@ -46,6 +46,11 @@ def set_paper_style(font_size: int = 20) -> str:
             "mathtext.rm": chosen,
             "mathtext.it": f"{chosen}:italic",
             "mathtext.bf": f"{chosen}:bold",
+            # Without these, the custom fontset falls back to the 'cursive' and
+            # 'monospace' generic families and warns on every render.
+            "mathtext.cal": f"{chosen}:italic",
+            "mathtext.sf": chosen,
+            "mathtext.tt": "DejaVu Sans Mono",
             "figure.dpi": 100,
             "savefig.bbox": "tight",
             "savefig.transparent": True,

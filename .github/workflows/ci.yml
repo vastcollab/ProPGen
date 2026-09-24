@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -e ".[dev,figures]"
+      - run: propgen info
+      - run: pytest -q
+
+  figures:
+    # Proves that every figure in the paper reproduces from a fresh clone
+    # using only the committed summaries -- no downloads, no simulation.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -e ".[dev,figures]"
+      - run: bash scripts/make_figures.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: figures
+          path: figures/
+
+  smoke:
+    # Runs every experiment end to end at reduced scale.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -e ".[dev,figures]"
+      - run: JOBS=2 bash scripts/smoke_test.sh
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install ruff nbstripout
+      - run: ruff check src tests
+      - run: nbstripout --verify experiments/*/figure.ipynb

@@ -11,11 +11,11 @@ from __future__ import annotations
 
 import numpy as np
 import pytest
-from reference_loop import reference_run
 from scipy import stats
 
-from propgen import Landscape, simulate
+from propgen import Landscape, initialization, simulate
 from propgen.prosed import _sample_categorical
+from reference_loop import reference_run
 
 
 def test_categorical_sampler_matches_np_random_choice():
@@ -88,7 +88,7 @@ def test_equilibrium_frequencies_agree_with_reference_implementation(mutation_ra
             simulate(
                 landscape, n_cycles=n_cycles, pop_size=pop_size,
                 mutation_rate=mutation_rate, seed=rep,
-                init=__import__("propgen").initialization.at(0, 0),
+                init=initialization.at(0, 0),
                 compute_theory=False,
             ).frequencies
             for rep in range(n_reps)

@@ -45,7 +45,8 @@ from typing import Any
 import numpy as np
 import yaml
 
-from . import initialization, schedule as schedule_mod
+from . import initialization
+from . import schedule as schedule_mod
 from .landscape import Landscape, read_matrix
 
 __all__ = ["load_config", "resolve_config", "apply_overrides", "build_landscapes"]
