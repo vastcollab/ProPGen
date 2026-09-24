@@ -137,30 +137,27 @@ simulation:
   schedule: {kind: switch_at, cycles: [100]}
 ```
 
-## Reproducing the paper
+## Reproducing manuscript results
 
-Aggregated results (mean ± SEM across trials) for every experiment are committed under `results/`, totalling 4.8 MB. **Every figure therefore reproduces from a fresh clone with no downloads and no simulation.**
-
+Aggregated results (mean ± SEM across trials) for every experiment are located under `results/`. 
 ```
-# All figures, from the committed summaries (~30 s)
 bash scripts/make_figures.sh
 ```
 
-To re-run the simulations themselves. All timings are measured on one CPU core at the published settings:
+To re-run the simulations :
 
 ```
-# Mean fitness from a non-equilibrium start -- 5 runs, ~1 s
+# Mean fitness from a non-equilibrium start 
 propgen sweep --sweep experiments/meanfit/sweep.yaml --jobs 5
 
-# Absolute-fitness non-invariance, deterministic vs probabilistic map -- 60 runs, ~16 s
+# Absolute-fitness non-invariance, deterministic vs probabilistic map 
 propgen sweep --sweep experiments/absfit/sweep_dgp.yaml  --jobs 16
 propgen sweep --sweep experiments/absfit/sweep_prgp.yaml --jobs 16
 
-# Phenotypic buoying -- 110 runs, ~30 s
+# Phenotypic buoying
 propgen sweep --sweep experiments/buoy/sweep.yaml --jobs 16
 
-# Phenotypic bridges / valley crossing -- 6,300 runs, 54 core-hours
-# (~1.5 h at --jobs 36, ~7 h at --jobs 8; --resume restarts an interrupted sweep)
+# Phenotypic bridges / valley crossing 
 propgen sweep --sweep experiments/bridge/sweep.yaml --jobs 36
 ```
 
@@ -172,7 +169,7 @@ propgen aggregate --raw results/bridge/raw --out results/bridge/summary.npz --th
 bash scripts/make_figures.sh
 ```
 
-The persister, coexistence-phase-diagram and rugged-landscape panels are analytic and need no simulation or stored data at all. The phase diagram in particular is computed exactly, by evaluating the Perron-Frobenius equilibrium over a grid in mutation rate and genotype-phenotype map:
+The persister, coexistence-phase-diagram and rugged-landscape panels are analytic and do not require simulations. The phase diagram is computed exactly, by evaluating the equilibrium frequency orderings over a parameter grid:
 
 ```python
 from propgen import phase_diagram
@@ -182,15 +179,10 @@ diagram = phase_diagram(
     mutation_rates=np.linspace(0.005, 0.5, 100),
     pheno_prob_values=np.linspace(0.0, 1.0, 100),
 )
-diagram.phase       # (100, 100) phase labels; ten distinct coexistence phases
+diagram.phase       
 ```
 
-Every experiment has a `--quick` preset that reduces population size, cycle count and trial count — and nothing else, so the model being exercised is identical. One command runs the entire pipeline end to end:
-
-```
-# Simulate, aggregate and plot everything at reduced scale (~40 s on 8 cores)
-bash scripts/smoke_test.sh
-```
+Every experiment has a `--quick` preset that reduces population size, cycle count and trial count to speed up long running simulations if desired. 
 
 Per-experiment commands, expected outputs and runtimes are in [`experiments/README.md`](experiments/README.md) and each experiment's own README.
 
