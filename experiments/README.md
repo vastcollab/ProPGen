@@ -13,8 +13,7 @@ and measured runtimes.
 | Phenotypic buoying | `buoy/` | 110 runs | 30 s |
 | Phenotypic bridges / valley crossing | `bridge/` | 6,300 runs | 54 core-hours |
 
-Aggregated summaries for every experiment are committed under `results/`, so
-all figure notebooks run from a fresh clone without re-running any simulation.
+Aggregated summaries for every experiment are located under `results/`. 
 
 Re-running a sweep writes per-trial output to `results/<name>/raw/`, which is
 gitignored.
