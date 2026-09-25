@@ -169,7 +169,7 @@ propgen aggregate --raw results/bridge/raw --out results/bridge/summary.npz --th
 bash scripts/make_figures.sh
 ```
 
-The persister and coexistence-phase-diagram panels are analytic and do not require simulations. The phase diagram is computed exactly, by evaluating the equilibrium frequency orderings over a parameter grid:
+The persister and coexistence phase diagram figues are analytic and do not require simulations. The phase diagram is computed exactly, by evaluating the equilibrium frequency orderings over a parameter grid:
 
 ```python
 from propgen import phase_diagram
@@ -186,37 +186,19 @@ Every experiment has a `--quick` preset that reduces population size, cycle coun
 
 Per-experiment commands, expected outputs and runtimes are in [`experiments/README.md`](experiments/README.md) and each experiment's own README.
 
-### Notes on the committed results
-
-`results/bridge/summary.npz` was aggregated from the 6,300 runs behind the published figure, keeping every 10th dilution cycle. The thinning is lossless for the analysis: the fitted relaxation time differs from the full-resolution value by under 0.1%.
-
-Simulations are seeded through an explicit `numpy.random.Generator`, and per-trial seeds are recorded in every output file, so any single trial can be reproduced in isolation. The code used for the preprint did not set a seed; re-running these sweeps will therefore produce results that are statistically equivalent to, but not bitwise identical with, the archived output. The inner loop was also vectorised for this release — about 21× faster, verified by distributional-equivalence tests against a transcription of the original implementation in `tests/reference_loop.py`.
-
-Certain schematic panels in the manuscript use previously published third-party data, which is not redistributed here; see the paper for those sources.
-
-## Tests
-
-```
-pip install -e ".[dev]"
-pytest
-```
-
-The suite checks, among other things, that ProSeD simulations converge to the equilibrium frequencies predicted analytically by ProP Gen theory — an independent check of the paper's central result, run in continuous integration on every commit. It also verifies seed determinism, that the global NumPy random state is never touched, that the vectorised loop is distributionally equivalent to the original, and that every shipped config loads and runs.
-
 ## Repository layout
 
 ```
-src/propgen/      the package: Landscape, ProSeD, theory, aggregation, CLI
+src/propgen/      the package: ProSeD, theory, aggregation, CLI
 configs/          one YAML per model
 data/             genotype-phenotype maps, mutation graphs, reproduction rates
 experiments/      one directory per paper result: sweep, figure notebook, README
 results/          committed mean +/- SEM summaries (raw per-trial runs are gitignored)
 theory/           Mathematica notebooks with the symbolic derivations
 tests/            test suite
-scripts/          make_figures.sh, smoke_test.sh
+scripts/          make_figures.sh
 ```
 
-The state of the code at preprint submission is preserved at tag `v0.0.1-preprint`.
 
 ## License
 
