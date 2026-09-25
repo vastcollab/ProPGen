@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  install:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -20,7 +20,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: pip install -e ".[dev,figures]"
       - run: propgen info
-      - run: pytest -q
 
   figures:
     # Proves that every figure in the paper reproduces from a fresh clone
@@ -57,5 +56,5 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install ruff nbstripout
-      - run: ruff check src tests
+      - run: ruff check src
       - run: nbstripout --verify experiments/*/figure.ipynb

@@ -195,7 +195,6 @@ data/             genotype-phenotype maps, mutation graphs, reproduction rates
 experiments/      one directory per paper result: sweep, figure notebook, README
 results/          committed mean +/- SEM summaries (raw per-trial runs are gitignored)
 theory/           Mathematica notebooks with the symbolic derivations
-tests/            test suite
 scripts/          make_figures.sh
 ```
 

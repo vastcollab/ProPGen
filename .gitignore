@@ -22,11 +22,8 @@ figures/
 # Jupyter
 .ipynb_checkpoints/
 
-# Test / lint caches
-.pytest_cache/
+# Lint caches
 .ruff_cache/
-.coverage
-htmlcov/
 
 # NFS silly-rename artifacts
 .nfs*
