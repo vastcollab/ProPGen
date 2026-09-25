@@ -2,6 +2,8 @@
 
 Implementation of [Evolutionary dynamics under phenotypic uncertainty](https://www.biorxiv.org/content/10.64898/2026.03.15.711953v1) by Vaibhav Mohanty*, Anna Sappington*, Eugene I. Shakhnovich and Bonnie Berger.
 
+<img width="664" height="236" alt="Screenshot 2026-09-24 at 8 25 21 PM" src="https://github.com/user-attachments/assets/914f3aaf-ff9b-4b0c-9e51-efda785ebc96" />
+
 Classical population genetics has relied on the same stochastic differential equations for over 60 years, and those equations assume that a genotype determines a phenotype. Real biological systems, from bacteria to cancers, are full of phenotypic heterogeneity and noise. **Probabilistic Phenotype Genetics** replaces the deterministic genotype-phenotype map with a probabilistic one, and doing so breaks several central tenets of the classical theory — including the invariance of evolutionary dynamics to a global shift in absolute fitness at fixed population size. The theory predicts that low-probability, high-fitness *phenotypic bridges* can accelerate fitness-valley crossing by more than an order of magnitude at unchanged mutation rates, and explains *phenotypic buoying*, in which a low-fitness phenotype persists at high frequency because a high-fitness phenotype carried by the same genotype acts as a source.
 
 The standard Wright-Fisher branching process cannot represent this phenotypic uncertainty because it treats phenotype as inherited rather than re-expressed. This repository implements the alternative introduced in the paper, **ProSeD** (Probabilistic Serial Dilution): a discrete-time algorithm with overlapping generations, phenotypic noise and stochastic phenotype switching, modelled on a laboratory serial-passaging experiment.
