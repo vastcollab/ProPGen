@@ -23,7 +23,7 @@ propgen info
 
 Requires Python 3.10 or later. Dependencies are `numpy`, `scipy`, `pyyaml` and `tqdm`, plus `matplotlib` and `mpmath` for the figures. 
 
-## ProSeD Quickstart
+## ProSeD quickstart
 
 Example demonstrating how to run a ProSeD simulation on user inputted data and compare with the analytic prediction:
 
