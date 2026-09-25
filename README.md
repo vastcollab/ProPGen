@@ -189,8 +189,8 @@ Per-experiment commands, expected outputs and runtimes are in [`experiments/READ
 ## Repository layout
 
 ```
-src/propgen/      the package: ProSeD, theory, aggregation, CLI
-configs/          one YAML per model
+src/propgen/      the package (ProSeD)
+configs/          one YAML per sim
 data/             genotype-phenotype maps, mutation graphs, reproduction rates
 experiments/      one directory per paper result: sweep, figure notebook, README
 results/          committed mean +/- SEM summaries (raw per-trial runs are gitignored)
