@@ -1,0 +1,2 @@
+# Antibiotic-free: normal cells grow, persisters are nearly dormant.
+0.02 0.0002

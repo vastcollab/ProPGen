@@ -1,0 +1,24 @@
+# Mean-fitness trajectory from a deliberately non-equilibrium starting point.
+#
+# The smallest and fastest experiment in the repository; a good first thing to
+# run to check the installation.
+
+experiment: meanfit
+seed: 42
+
+landscape:
+  adjacency:   ../data/meanfit/adjacency.txt
+  pheno_probs: ../data/meanfit/pheno_probs.txt
+  repro_probs: ../data/meanfit/repro_probs.txt
+
+simulation:
+  pop_size: 10000
+  n_cycles: 200
+  generations_per_cycle: 10
+  offspring_per_division: 1
+  mutation_rate: 0.0
+  init:
+    kind: frequencies
+    # Frequencies of (genotype, phenotype) pairs, in row-major order:
+    # (0,0), (0,1), (1,0), (1,1).
+    values: [0.4, 0.1, 0.05, 0.45]

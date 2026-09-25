@@ -1,0 +1,7 @@
+# Per-phenotype probability of dividing in one generation.
+# experiments/absfit sweeps this over three pairs whose *difference* is held
+# fixed at 0.003 while the absolute level shifts:
+#   (0.001, 0.004), (0.0022, 0.0052), (0.0175, 0.0205)
+# Under classical population genetics at fixed population size the dynamics
+# should be invariant to that shift; under phenotypic uncertainty they are not.
+0.001 0.004

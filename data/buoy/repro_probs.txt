@@ -1,0 +1,2 @@
+# Per-phenotype probability of dividing in one generation.
+0.009 0.002

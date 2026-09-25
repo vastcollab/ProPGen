@@ -1,0 +1,36 @@
+# Absolute-fitness non-invariance (prgp map).
+#
+# The fitness *difference* between the two phenotypes is held fixed at 0.003
+# while the absolute level shifts across three settings. Under classical
+# population genetics at fixed population size the dynamics are invariant to
+# this shift; under a probabilistic genotype-phenotype map they are not.
+#
+# Full sweep: 3 levels x 10 trials = 30 runs (~16 s on one core).
+
+experiment: absfit_prgp
+base: ../../configs/absfit_prgp.yaml
+out: results/absfit/raw_prgp
+seed: 42
+trials: 10
+
+grid:
+  - name: r1
+    values: [0.001, 0.0022, 0.0175]
+    set:
+      "landscape.repro_probs.0": "v"
+      "landscape.repro_probs.1": "v + 0.003"
+
+aggregate:
+  thin: 1
+
+quick:
+  overrides:
+    simulation.n_cycles: 60
+    simulation.pop_size: 2000
+  trials: 2
+  grid:
+    - name: r1
+      values: [0.001, 0.0175]
+      set:
+        "landscape.repro_probs.0": "v"
+        "landscape.repro_probs.1": "v + 0.003"

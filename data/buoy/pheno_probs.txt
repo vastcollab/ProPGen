@@ -1,0 +1,8 @@
+# Genotype -> phenotype map. Rows are genotypes, columns are phenotypes.
+# Phenotype 0 is high-fitness, phenotype 1 is low-fitness.
+#
+# Row 1 is what experiments/buoy sweeps:
+#   pheno_probs[1] = [m, 1 - m]
+# The value below is m = 0.5.
+0.4 0.6
+0.5 0.5

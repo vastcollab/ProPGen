@@ -1,0 +1,6 @@
+# Genotype mutation graph: 3-genotype path 0 -- 1 -- 2.
+# Genotype 1 sits between the two high-fitness genotypes and is the valley
+# that the population must cross.
+0 1 0
+1 0 1
+0 1 0

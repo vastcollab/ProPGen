@@ -1,0 +1,39 @@
+# Phenotypic bridges: valley-crossing time vs. bridge probability.
+#
+# phi is the probability that the valley genotype expresses the high-fitness
+# phenotype; gamma is the reproduction rate of the low-fitness phenotype
+# (the valley depth).
+#
+# Full sweep: 21 phi x 3 gamma x 100 trials = 6,300 runs (~54 core-hours).
+
+experiment: bridge
+base: ../../configs/bridge.yaml
+out: results/bridge/raw
+seed: 42
+trials: 100
+
+grid:
+  - name: phi
+    values: {start: 0.0, stop: 1.0, step: 0.05}
+    set: {"landscape.pheno_probs.1": "[v, 1 - v]"}
+  - name: gamma
+    values: [0.002, 0.0008, 0.0002]
+    set: {"landscape.repro_probs.1": "v"}
+
+aggregate:
+  thin: 10
+
+# Reduced scale for smoke-testing the pipeline. Only the population size,
+# number of cycles and number of trials change; the model is untouched.
+quick:
+  overrides:
+    simulation.n_cycles: 2000
+    simulation.pop_size: 2000
+  trials: 2
+  grid:
+    - name: phi
+      values: [0.0, 0.1, 0.5]
+      set: {"landscape.pheno_probs.1": "[v, 1 - v]"}
+    - name: gamma
+      values: [0.0002]
+      set: {"landscape.repro_probs.1": "v"}

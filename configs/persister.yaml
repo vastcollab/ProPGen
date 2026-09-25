@@ -1,0 +1,27 @@
+# Bacterial persistence under a switching environment.
+#
+# One genotype, two phenotypes (normally growing and persister), no mutation.
+# At cycle 100 antibiotic is applied: normal cells stop dividing and persisters
+# take over. This config exists to demonstrate environment switching; the
+# persister figure in the paper is produced analytically by
+# experiments/persister, not by simulation.
+
+experiment: persister
+seed: 42
+
+landscape:
+  adjacency: ../data/persister/adjacency.txt
+  environments:
+    - pheno_probs: ../data/persister/pheno_probs_normal.txt
+      repro_probs: ../data/persister/repro_probs_normal.txt
+    - pheno_probs: ../data/persister/pheno_probs_antibiotic.txt
+      repro_probs: ../data/persister/repro_probs_antibiotic.txt
+
+simulation:
+  pop_size: 10000
+  n_cycles: 1000
+  generations_per_cycle: 10
+  offspring_per_division: 1
+  mutation_rate: 0.0
+  init: {kind: uniform_over_support}
+  schedule: {kind: switch_at, cycles: [100]}

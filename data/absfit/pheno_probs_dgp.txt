@@ -1,0 +1,4 @@
+# Deterministic genotype -> phenotype map (DGP): each genotype expresses one
+# phenotype with certainty. This is the classical population-genetics case.
+1.0 0.0
+0.0 1.0

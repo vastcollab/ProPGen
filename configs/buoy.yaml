@@ -1,0 +1,21 @@
+# Phenotypic buoying.
+#
+# A low-fitness phenotype is sustained at high frequency because it is carried
+# by a genotype that also expresses a high-fitness phenotype, which acts as a
+# source. experiments/buoy sweeps genotype 1's phenotype distribution.
+
+experiment: buoy
+seed: 42
+
+landscape:
+  adjacency:   ../data/buoy/adjacency.txt
+  pheno_probs: ../data/buoy/pheno_probs.txt
+  repro_probs: ../data/buoy/repro_probs.txt
+
+simulation:
+  pop_size: 10000
+  n_cycles: 250
+  generations_per_cycle: 10
+  offspring_per_division: 1
+  mutation_rate: 0.1
+  init: {kind: uniform_over_support}

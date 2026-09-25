@@ -1,0 +1,20 @@
+# Mean-fitness trajectory from a non-equilibrium start.
+#
+# Full sweep: 5 trials, no swept parameter (~1 s on one core).
+
+experiment: meanfit
+base: ../../configs/meanfit.yaml
+out: results/meanfit/raw
+seed: 42
+trials: 5
+grid: []
+
+aggregate:
+  thin: 1
+
+quick:
+  overrides:
+    simulation.n_cycles: 60
+    simulation.pop_size: 2000
+  trials: 2
+  grid: []

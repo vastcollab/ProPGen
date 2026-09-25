@@ -1,0 +1,27 @@
+# Phenotypic buoying: a low-fitness phenotype sustained at high frequency.
+#
+# Full sweep: 11 m x 10 trials = 110 runs (~30 s on one core).
+
+experiment: buoy
+base: ../../configs/buoy.yaml
+out: results/buoy/raw
+seed: 42
+trials: 10
+
+grid:
+  - name: m
+    values: {start: 0.0, stop: 1.0, step: 0.1}
+    set: {"landscape.pheno_probs.1": "[v, 1 - v]"}
+
+aggregate:
+  thin: 1
+
+quick:
+  overrides:
+    simulation.n_cycles: 60
+    simulation.pop_size: 2000
+  trials: 2
+  grid:
+    - name: m
+      values: [0.0, 0.5, 1.0]
+      set: {"landscape.pheno_probs.1": "[v, 1 - v]"}

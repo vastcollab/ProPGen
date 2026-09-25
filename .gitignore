@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.env
+
+# Simulation output. Per-trial raw runs are regenerable; only the aggregated
+# summaries under results/*/summary*.npz are committed.
+results/**/raw/
+results/**/raw_*/
+results/**/*_quick.npz
+results/**/*.pkl
+sim_results/
+
+# Generated figures
+figures/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Lint caches
+.ruff_cache/
+
+# NFS silly-rename artifacts
+.nfs*
+
+# OS
+.DS_Store
