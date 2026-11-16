@@ -4,11 +4,13 @@ Implementation of [Evolutionary dynamics under phenotypic uncertainty](https://w
 
 **Figure 2**
 
-ProSed simulation, config file, data files, plotting notebook for buoy Fig 2.
+ProSed simulation, config file, data files for buoy Fig 2.
 
 **Figure 3**
 
 **Figure 4**
+
+ProSeD simulations, config file, data files for bridge Fig 4.
 
 **Figure 5**
 
