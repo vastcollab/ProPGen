@@ -22,3 +22,7 @@ Included in this repo is code needed to run simulations and reproduce their resu
 
 - ProSeD simulations, config files, data files for mean fitness Fig 6.
 
+**Figure 7**
+
+- Analytical solution / plots for persister experiment
+
