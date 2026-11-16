@@ -16,5 +16,7 @@ ProSeD simulations, config file, data files for bridge Fig 4.
 
 **Figure 5**
 
+ProSeD simulations, config files, data files for absolute fitness Fig 5 (DGP and PrGP).
+
 **Figure 6**
 
