@@ -6,17 +6,17 @@ Included in this repo is code needed to run simulations and reproduce their resu
 
 **Figure 2**
 
-ProSed simulation, config file, data files for buoy Fig 2.
+- ProSed simulation, config file, data files for buoy Fig 2.
 
 **Figure 3**
 
 **Figure 4**
 
-ProSeD simulations, config file, data files for bridge Fig 4.
+- ProSeD simulations, config file, data files for bridge Fig 4.
 
 **Figure 5**
 
-ProSeD simulations, config files, data files for absolute fitness Fig 5 (DGP and PrGP).
+- ProSeD simulations, config files, data files for absolute fitness Fig 5 (DGP and PrGP).
 
 **Figure 6**
 
