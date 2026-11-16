@@ -10,6 +10,8 @@ Included in this repo is code needed to run simulations and reproduce their resu
 
 **Figure 3**
 
+- ProSed simulations, config files, data files for mu / phi phase diagrams for Fig 3.
+
 **Figure 4**
 
 - ProSeD simulations, config file, data files for bridge Fig 4.
