@@ -2,6 +2,8 @@
 
 Implementation of [Evolutionary dynamics under phenotypic uncertainty](https://www.biorxiv.org/content/10.64898/2026.03.15.711953v1) by Vaibhav Mohanty*, Anna Sappington*, Eugene I. Shakhnovich** and Bonnie Berger**.
 
+<img width="859" height="472" alt="Screenshot 2026-11-17 at 6 07 29 PM" src="https://github.com/user-attachments/assets/c442f853-d84a-438e-949d-44561eb896fa" />
+
 ----------------------------------------------------------------------------------------------------------------------------------------
 
 Included in this repo is code needed to run simulations and reproduce their results for the figures in the paper, outlined below:
