@@ -11,23 +11,23 @@ Included in this repo is code needed to run simulations and reproduce their resu
 
 **Figure 2**
 
-- ProSed simulation, config file, data files for buoy Fig 2.
+- ProSed simulation, data, plotting files for buoy Fig 2.
 
 **Figure 3**
 
-- ProSed simulations, config files, data files for mu / phi phase diagrams for Fig 3.
+- ProSed simulation, data, plotting files for mu / phi phase diagrams for Fig 3.
 
 **Figure 4**
 
-- ProSeD simulations, config file, data files for bridge Fig 4.
+- ProSed simulation, data, plotting files for bridge Fig 4.
 
 **Figure 5**
 
-- ProSeD simulations, config files, data files for absolute fitness Fig 5 (DGP and PrGP).
+- ProSed simulation, data, plotting files for absolute fitness Fig 5 (DGP and PrGP).
 
 **Figure 6**
 
-- ProSeD simulations, config files, data files for mean fitness Fig 6.
+- ProSed simulation, data, plotting files for mean fitness Fig 6.
 
 **Figure 7**
 
