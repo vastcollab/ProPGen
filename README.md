@@ -35,7 +35,7 @@ Included in this repo is code needed to run simulations and reproduce their resu
 
 To run the code for each figure, follow these steps: 
 
-``pip install -r requirements.txt''
+``pip install -r requirements.txt``
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
