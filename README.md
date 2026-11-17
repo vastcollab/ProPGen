@@ -33,9 +33,13 @@ Included in this repo is code needed to run simulations and reproduce their resu
 
 - Analytical solution / plots for persister experiment
 
+----------------------------------------------------------------------------------------------------------------------------------------
+
 To run the code for each figure, follow these steps: 
 
 ``pip install -r requirements.txt``
+
+``cd FigN && bash run_*.sh`` (replace ``N`` with the desired Figure number)
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
