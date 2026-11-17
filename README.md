@@ -1,8 +1,9 @@
+
 # Evolutionary Dynamics under Phenotypic Uncertainty and Probabilistic Serial Dilution (ProSeD) 
 
 Implementation of [Evolutionary dynamics under phenotypic uncertainty](https://www.biorxiv.org/content/10.64898/2026.03.15.711953v1) by Vaibhav Mohanty*, Anna Sappington*, Eugene I. Shakhnovich** and Bonnie Berger**.
 
-<img width="859" height="472" alt="Screenshot 2026-11-17 at 6 07 29 PM" src="https://github.com/user-attachments/assets/c442f853-d84a-438e-949d-44561eb896fa" />
+<img width="520" height="184" alt="Screenshot 2026-11-17 at 6 09 08 PM" src="https://github.com/user-attachments/assets/8d316b08-8f9e-42d0-ab60-91199c19d2f4" />
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
