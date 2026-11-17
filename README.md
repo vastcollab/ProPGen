@@ -2,6 +2,8 @@
 
 Implementation of [Evolutionary dynamics under phenotypic uncertainty](https://www.biorxiv.org/content/10.64898/2026.03.15.711953v1) by Vaibhav Mohanty*, Anna Sappington*, Eugene I. Shakhnovich** and Bonnie Berger**.
 
+----------------------------------------------------------------------------------------------------------------------------------------
+
 Included in this repo is code needed to run simulations and reproduce their results for the figures in the paper, outlined below:
 
 **Figure 2**
@@ -27,6 +29,8 @@ Included in this repo is code needed to run simulations and reproduce their resu
 **Figure 7**
 
 - Analytical solution / plots for persister experiment
+
+----------------------------------------------------------------------------------------------------------------------------------------
 
 We also include an example notebook an example data files so users can run ProSeD simulations and our analytical theory on their own PrGP maps. This is located in the Example notebook folder.   
 
