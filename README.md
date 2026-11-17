@@ -33,6 +33,10 @@ Included in this repo is code needed to run simulations and reproduce their resu
 
 - Analytical solution / plots for persister experiment
 
+To run the code for each figure, follow these steps: 
+
+``pip install -r requirements.txt''
+
 ----------------------------------------------------------------------------------------------------------------------------------------
 
 We also include an example notebook an example data files so users can run ProSeD simulations and our analytical theory on their own PrGP maps. This is located in the Example notebook folder.   
