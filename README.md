@@ -1,5 +1,5 @@
 
-# Evolutionary Dynamics under Phenotypic Uncertainty and Probabilistic Serial Dilution (ProSeD) 
+# Code for "Evolutionary dynamics under phenotypic uncertainty" (Mohanty and Sappington et al., RECOMB, 2026) and "Phenotypic noise drives evolutionary dynamics in adapting populations"
 
 Implementation of [Evolutionary dynamics under phenotypic uncertainty](https://www.biorxiv.org/content/10.64898/2026.03.15.711953v1) by Vaibhav Mohanty*, Anna Sappington*, Eugene I. Shakhnovich** and Bonnie Berger**.
 
